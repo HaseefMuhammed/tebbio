@@ -8,139 +8,178 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Initial full-screen loader (shows while page assets load) -->
+    <!-- Loading Spinner -->
     <div id="initial-loader" class="initial-loader">
-        <div class="spinner" aria-hidden="true"></div>
+        <div class="loader-content">
+            <div class="spinner" aria-hidden="true"></div>
+            <p class="loader-text">Loading Excellence...</p>
+        </div>
     </div>
 
-    <!-- Door overlay used for link transitions (hidden until a link is clicked) -->
+    <!-- Door Animation Overlay -->
     <div id="door-overlay" class="door-overlay" aria-hidden="true">
         <div class="door door-left"></div>
         <div class="door door-right"></div>
     </div>
+
+    <!-- Clean Premium Background -->
+    <div class="background-wrapper">
+        <!-- Animated Gradient -->
+        <div class="gradient-bg"></div>
+        
+        <!-- Floating Orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        
+        <!-- Subtle Grid -->
+        <div class="grid-overlay"></div>
+    </div>
+
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <img src="tab.png" alt="TEB Innovations Logo">
+            <div class="logo-wrapper">
+                <div class="logo">
+                    <img src="tab.png" alt="TEB Innovations Logo">
+                    <div class="logo-glow"></div>
+                </div>
             </div>
-            <h1>TEB Innovations</h1>
-            <p class="subtitle">Explore Our Digital Ecosystem</p>
+            <h1 class="title">
+                <span class="title-main">TEB Innovations</span>
+                <span class="title-accent"></span>
+            </h1>
+            <p class="subtitle">Crafting Digital Excellence</p>
+            <div class="header-divider"></div>
         </div>
 
+        <!-- Link Cards -->
         <div class="links-container">
-            <a href="https://tebinnovations.in" class="link-card" target="_blank" rel="noopener noreferrer">
+            <a href="https://tebinnovations.in" class="link-card main-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-shine"></div>
                 <div class="link-content">
                     <div class="link-title">TEB Innovations</div>
-                    <div class="link-description">Creative agency specializing in Web Development, App Development, and Graphic Designing.</div>
+                    <div class="link-description">Creative agency specializing in Web, App, and Graphic Designing.</div>
                 </div>
                 <div class="link-icon">
-                    <img src="tab.png" alt="TEB">
+                    <img src="tab.png" alt="TEB Icon">
                 </div>
             </a>
 
-            <a href="https://awards.tebinnovations.in" class="link-card" target="_blank" rel="noopener noreferrer">
+            <a href="https://awards.tebinnovations.in" class="link-card awards-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-shine"></div>
                 <div class="link-content">
                     <div class="link-title">Our Awards</div>
-                    <div class="link-description">Awards Website</div>
+                    <div class="link-description">Recognition & Achievements</div>
                 </div>
                 <div class="link-icon">
-                    <img src="awards.png" alt="Awards">
+                    <img src="awards.png" alt="Awards Icon">
                 </div>
             </a>
 
-            <a href="https://edubot.tebinnovations.in" class="link-card" target="_blank" rel="noopener noreferrer">
+            <a href="https://edubot.tebinnovations.in" class="link-card edubot-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-shine"></div>
                 <div class="link-content">
                     <div class="link-title">EduBot</div>
                     <div class="link-description">AI-Powered Education Platform</div>
                 </div>
                 <div class="link-icon">
-                    <img src="eb.png" alt="EduBot">
+                    <img src="eb.png" alt="EduBot Icon">
+                </div>
+            </a>
+
+            <a href="https://www.instagram.com/teb_innovations?igsh=MTZzNWZjZjFjY2o4eg==" class="link-card instagram-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-shine"></div>
+                <div class="link-content">
+                    <div class="link-title">Instagram</div>
+                    <div class="link-description">Follow us for updates & behind-the-scenes</div>
+                </div>
+                <div class="link-icon instagram-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon">
                 </div>
             </a>
         </div>
 
+        <!-- Footer -->
         <div class="footer">
-            <p>&copy; 2025 TEB Innovations. All rights reserved.</p>
+            <div class="footer-content">
+                <p>&copy; 2025 TEB Innovations. All rights reserved.</p>
+                <div class="footer-links">
+                    <span>Designed with passion</span>
+                </div>
+            </div>
         </div>
     </div>
-    
-        <script>
-        (function(){
-            const initial = document.getElementById('initial-loader');
-            const door = document.getElementById('door-overlay');
-            const left = door && door.querySelector('.door-left');
-            const right = door && door.querySelector('.door-right');
 
-            // Hide initial loader after full load
-            window.addEventListener('load', function(){
-                // small delay so spinner is visible briefly on fast loads
-                setTimeout(()=>{
-                    if (!initial) return;
+    <!-- JavaScript for Loader & Door Animation -->
+    <script>
+    (function(){
+        const initial = document.getElementById('initial-loader');
+        const door = document.getElementById('door-overlay');
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (initial) {
                     initial.classList.add('hidden');
-                    // remove from document flow after transition
-                    setTimeout(()=>{ try{ initial.style.display = 'none'; }catch(e){} }, 500);
-                }, 250);
-            });
-
-            // Intercept clicks on links to run door animation before navigating
-            function handleLinkClick(e){
-                // Only handle primary (left) clicks without modifier keys — let users open in new tabs/windows
-                if (e.button && e.button !== 0) return;
-                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-
-                const a = e.currentTarget;
-                const href = a.getAttribute('href');
-                const target = a.getAttribute('target');
-
-                // don't intercept anchors, mailto:, tel:, javascript: links or empty href
-                if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
-
-                e.preventDefault();
-
-                // For target "_blank" open a placeholder window immediately to avoid popup blockers
-                let newWin = null;
-                if (target === '_blank') {
-                    try { newWin = window.open('about:blank', '_blank'); } catch(err) { newWin = null; }
+                    setTimeout(() => { initial.style.display = 'none'; }, 500);
                 }
+            }, 800);
+        });
 
-                // If overlay/door isn't available, navigate immediately (use opened window if any)
-                if (!door) {
-                    if (newWin) {
-                        try { newWin.location = href; } catch(e) { window.open(href, '_blank'); }
-                    } else {
-                        if (target === '_blank') window.open(href, '_blank'); else window.location.href = href;
-                    }
-                    return;
-                }
+        function handleLinkClick(e) {
+            if (e.button && e.button !== 0) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
-                // First make overlay visible
-                door.classList.add('visible');
-                
-                // Small delay to ensure overlay is visible before animation
-                setTimeout(() => {
-                    // Then start the door opening animation
-                    door.classList.add('open');
-                    
-                    // Wait for animation to fully complete (matches CSS transition-duration)
-                    const animationMs = 700;
-                    setTimeout(() => {
-                        // Finally navigate after doors are fully open
-                        if (newWin) {
-                            try { newWin.location = href; } catch(e) { window.open(href, '_blank'); }
-                        } else {
-                            if (target === '_blank') window.open(href, '_blank'); else window.location.href = href;
-                        }
-                    }, animationMs + 100); // Add extra 100ms buffer after animation
-                }, 50);
+            const a = e.currentTarget;
+            const href = a.getAttribute('href');
+            const target = a.getAttribute('target');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+            e.preventDefault();
+
+            let newWin = null;
+            if (target === '_blank') {
+                try { newWin = window.open('about:blank', '_blank'); } catch (err) { newWin = null; }
             }
 
-            // Attach to links
-            document.querySelectorAll('a').forEach(a=>{
-                const href = a.getAttribute('href');
-                if (!href) return;
-                a.addEventListener('click', handleLinkClick);
+            if (!door) {
+                if (newWin) newWin.location = href;
+                else window.location.href = href;
+                return;
+            }
+
+            door.classList.add('visible');
+            setTimeout(() => {
+                door.classList.add('open');
+                setTimeout(() => {
+                    if (newWin) {
+                        try { newWin.location = href; } catch { window.open(href, '_blank'); }
+                    } else {
+                        if (target === '_blank') window.open(href, '_blank');
+                        else window.location.href = href;
+                    }
+                }, 800);
+            }, 50);
+        }
+
+        document.querySelectorAll('a').forEach(a => {
+            const href = a.getAttribute('href');
+            if (href) a.addEventListener('click', handleLinkClick);
+        });
+
+        // Simple Smooth Parallax
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth - 0.5;
+            const y = e.clientY / window.innerHeight - 0.5;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 25;
+                const xMove = x * speed;
+                const yMove = y * speed;
+                orb.style.transform = `translate(${xMove}px, ${yMove}px)`;
             });
-        })();
-        </script>
+        });
+    })();
+    </script>
 </body>
 </html>
